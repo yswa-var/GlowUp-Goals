@@ -27,7 +27,7 @@ class DatabaseManager:
 
         # Use environment variables with fallbacks
         mongodb_url = mongodb_url or os.getenv("MONGODB_URL", "mongodb://localhost:27017")
-        db_name = db_name or os.getenv("MONGODB_DB_NAME", "adhd_coach")
+        db_name = db_name or os.getenv("MONGODB_DB_NAME", "accountability_coach")
 
         try:
             # Create client

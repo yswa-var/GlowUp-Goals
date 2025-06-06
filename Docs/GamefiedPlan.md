@@ -1,14 +1,14 @@
-Gamification Design for ADHD Accountability Coach App
-This document outlines the gamification strategy for the ADHD Accountability Coach App, transforming it into a comprehensive life tracker that motivates users to manage tasks ranging from shopping lists to long-term goals. The design ensures the app remains user-friendly, ADHD-sensitive, and engaging by incorporating simple, rewarding, and optional gamification elements.
+Gamification Design for Accountability Coach App
+This document outlines the gamification strategy for the Accountability Coach App, transforming it into a comprehensive life tracker that motivates users to manage tasks ranging from shopping lists to long-term goals. The design ensures the app remains user-friendly, accessible, and engaging by incorporating simple, rewarding, and optional gamification elements.
 1. Gamification Objectives
 
 Motivate Users: Encourage consistent app usage and task completion through rewards and positive reinforcement.
 Track Progress: Provide visual and tangible indicators of progress across various life aspects.
 Enhance Engagement: Make the app enjoyable and satisfying to use daily.
-Support ADHD Needs: Ensure gamification is simple, non-overwhelming, and customizable.
+Support User Needs: Ensure gamification is simple, non-overwhelming, and customizable.
 
 2. Core Gamification Elements
-The following elements are integrated to create a motivating yet ADHD-friendly experience:
+The following elements are integrated to create a motivating yet user-friendly experience:
 2.1 Points System
 
 Earning Points: Users earn points for actions such as:
@@ -95,7 +95,7 @@ Progress Tracking: Visual progress bars for each goal.
 Badges: "Goal Achiever" for completing long-term goals.
 
 4. User-Friendly Gamification Design
-To ensure the gamification is ADHD-friendly, the following principles are applied:
+To ensure the gamification is user-friendly, the following principles are applied:
 
 Simplicity: Straightforward points system (e.g., 1 point per task).
 Immediate Feedback: Points and rewards are shown instantly after actions.
@@ -177,7 +177,7 @@ Reset focus streaks if a check-in indicates distraction.
 
 6.3 API Endpoints
 
-GET /gamification: Retrieve user’s points, level, badges, and streaks.
+GET /gamification: Retrieve user's points, level, badges, and streaks.
 GET /leaderboard: (Optional) Retrieve anonymous leaderboard rankings.
 POST /preferences: Update gamification visibility and participation.
 
@@ -185,23 +185,23 @@ POST /preferences: Update gamification visibility and participation.
 The OpenAI LLM enhances gamification by providing personalized encouragement and feedback.
 
 Motivational Messages:
-"You’ve earned 50 points today! Keep it up to reach level 5!"
-"Congrats on your new badge, Task Master! You’re unstoppable!"
+"You've earned 50 points today! Keep it up to reach level 5!"
+"Congrats on your new badge, Task Master! You're unstoppable!"
 
 
 Streak Reminders:
-"Your focus streak is at 3 days! Let’s make it 4 tomorrow."
+"Your focus streak is at 3 days! Let's make it 4 tomorrow."
 
 
 Goal Celebrations:
-"You’ve achieved your long-term goal! Time to set a new one?"
+"You've achieved your long-term goal! Time to set a new one?"
 
 
 
 Implementation:
 
 Extend the system prompt to include gamification context.
-Use user’s gamification data in prompts for personalized responses.
+Use user's gamification data in prompts for personalized responses.
 
 8. Comprehensive Life Tracking
 To make the app a true life tracker, the following features are added:
@@ -255,4 +255,4 @@ Social Features: Optional sharing of achievements on social media.
 Custom Badges: Allow users to create personal badges.
 AI-Powered Insights: Use machine learning to suggest optimal task times or categories based on user patterns.
 
-This gamification design transforms the ADHD Accountability Coach App into a motivating life tracker, encouraging users to manage all aspects of their lives—from daily chores to long-term aspirations—while remaining sensitive to ADHD needs.
+This gamification design transforms the Accountability Coach App into a motivating life tracker, encouraging users to manage all aspects of their lives—from daily chores to long-term aspirations—while remaining sensitive to user needs.

@@ -1,5 +1,5 @@
-Low-Level Design: ADHD Accountability Coach App (User-Friendly)
-This low-level design (LLD) refines the ADHD Accountability Coach App to be maximally user-friendly for individuals with ADHD, emphasizing simplicity, clarity, and motivational feedback. It uses a Python FastAPI backend, React frontend with Tailwind CSS, MongoDB database, and OpenAI API for LLM integration. The design details where the LLM is required, where it's not, and how to scrape tasks/goals to detect diversions with warnings.
+Low-Level Design: Accountability Coach App (User-Friendly)
+This low-level design (LLD) refines the Accountability Coach App to be maximally user-friendly, emphasizing simplicity, clarity, and motivational feedback. It uses a Python FastAPI backend, React frontend with Tailwind CSS, MongoDB database, and OpenAI API for LLM integration. The design details where the LLM is required, where it's not, and how to scrape tasks/goals to detect diversions with warnings.
 1. User-Friendly Design Principles
 
 Simplicity: Minimal steps for actions (e.g., one-click task addition).
@@ -12,7 +12,7 @@ Flexibility: Natural language input with forgiving parsing.
 2. Backend (Python FastAPI)
 2.1 Project Structure
 
-Modular Design: Organized for maintainability and ADHD-friendly development.
+Modular Design: Organized for maintainability and user-friendly development.
 main.py: FastAPI entry point.
 api/: Routes for chat, tasks, moods, logs, trends.
 models/: Pydantic models for data validation.
@@ -87,7 +87,7 @@ LLM Usage: Required for /chat to process user inputs and generate responses; not
 
 Technology: OpenAI's gpt-3.5-turbo (or gpt-4 for better performance).
 Prompt Design:
-System Prompt: You are a friendly, supportive ADHD accountability coach. Use simple, encouraging language. Ask about current tasks, check in every 30 minutes, troubleshoot distractions with practical suggestions, and celebrate progress (e.g., "You're on a 3-task streak!"). Parse commands like "Add task: X" or "Log mood: Y" and respond clearly.
+System Prompt: You are a friendly, supportive accountability coach. Use simple, encouraging language. Ask about current tasks, check in every 30 minutes, troubleshoot distractions with practical suggestions, and celebrate progress (e.g., "You're on a 3-task streak!"). Parse commands like "Add task: X" or "Log mood: Y" and respond clearly.
 
 
 Context: Maintain last 5 messages for continuity (stored in-memory or Redis).
@@ -222,7 +222,7 @@ Tip: Show a subtle notification dot for new check-ins.Trick: Reconnect WebSocket
 LLM Usage: Not required (handled by backend API calls).
 3.3 UI Design
 
-ADHD-Friendly:
+Productivity-Focused Design:
 High-contrast colors (e.g., dark text on white background).
 Large, readable fonts (min 16px, sans-serif like Inter).
 No animations or flashing elements.
@@ -292,7 +292,7 @@ Error Handling: Fallback to static messages if API fails.
 User-Friendly Tip: Use emojis (e.g., 🎉 for streaks) in LLM responses for visual appeal.Trick: Batch API calls for multiple users to optimize costs.
 6. Engineering Masterpiece Tips & Tricks
 
-User Testing: Conduct usability tests with ADHD users to refine UI/UX.
+User Testing: Conduct usability tests with target users to refine UI/UX.
 Testing: 90% unit test coverage with Pytest, E2E with Cypress.
 CI/CD: GitHub Actions with Docker for automated deployments.
 Monitoring: Prometheus/Grafana for real-time metrics (e.g., API latency, user engagement).
@@ -312,4 +312,4 @@ Notifications: Browser push notifications for check-ins if app is in background.
 Gamification: Badges for milestones (e.g., "5-Day Focus Hero").
 Minimal Steps: One-tap task completion, mood logging via sliders.
 
-This LLD ensures the app is intuitive, accessible, and engaging for ADHD users while maintaining engineering excellence through robust architecture, optimized performance, and thoughtful design.
+This LLD ensures the app is intuitive, accessible, and engaging while maintaining engineering excellence through robust architecture, optimized performance, and thoughtful design.

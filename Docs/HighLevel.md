@@ -1,6 +1,6 @@
-ADHD Accountability Coach App: Requirements and High-Level Design
+Accountability Coach App: Requirements and High-Level Design
 1. Project Overview
-The ADHD Accountability Coach App is a web-based chat application designed to assist users with ADHD in maintaining focus, managing tasks, and tracking productivity. The application leverages OpenAI's large language model (LLM) to act as an interactive accountability coach, checking in periodically, offering motivational feedback, troubleshooting distractions, and analyzing productivity trends. Key features include task management, mood tracking, focus streak monitoring, and conversation log analysis.
+The Accountability Coach App is a web-based chat application designed to assist users in maintaining focus, managing tasks, and tracking productivity. The application leverages OpenAI's large language model (LLM) to act as an interactive accountability coach, checking in periodically, offering motivational feedback, troubleshooting distractions, and analyzing productivity trends. Key features include task management, mood tracking, focus streak monitoring, and conversation log analysis.
 2. Requirements
 2.1 Functional Requirements
 
@@ -79,7 +79,7 @@ Conversation logs are private and accessible only to the authenticated user.
 
 Usability
 
-The interface is intuitive, with a clean design optimized for ADHD users (minimal distractions, clear fonts, high contrast).
+The interface is intuitive, with a clean design optimized for productivity (minimal distractions, clear fonts, high contrast).
 The app is accessible on desktop and mobile browsers (responsive design).
 Chat commands are simple and forgiving (e.g., natural language parsing for task creation).
 
@@ -153,7 +153,7 @@ LLM Integration
 
 API: OpenAI's API (e.g., gpt-4 or gpt-3.5-turbo for chat completions).
 Prompt Engineering:
-Initial prompt: "You are an accountability coach for someone with ADHD. Ask what they're working on, check in every 30 minutes, troubleshoot distractions, and provide motivational feedback like focus streaks."
+Initial prompt: "You are an accountability coach focused on helping users maintain productivity and focus. Ask what they're working on, check in every 30 minutes, troubleshoot distractions, and provide motivational feedback like focus streaks."
 Task commands: Parse inputs like "Add task: Write essay" into structured data using regex or simple NLP.
 Distraction troubleshooting: If user says "I'm distracted," respond with questions like "What's pulling your focus? Is it external or internal?" and suggest strategies.
 Configuration: Use OpenAI's ChatCompletion endpoint with temperature ~0.7 for balanced creativity and consistency.
@@ -301,7 +301,7 @@ Advanced Analytics: Use ML to predict distraction triggers based on mood and tas
 
 4. Implementation Notes
 
-Frontend: Use React with hooks for state management (e.g., useState for tasks, useEffect for WebSocket updates). Tailwind CSS ensures a clean, ADHD-friendly design (minimal animations, high contrast).
+Frontend: Use React with hooks for state management (e.g., useState for tasks, useEffect for WebSocket updates). Tailwind CSS ensures a clean, productivity-focused design (minimal animations, high contrast).
 Backend: FastAPI routes for /tasks, /moods, /logs, and /trends. WebSocket endpoint for check-in notifications. Use APScheduler for check-in scheduling.
 LLM Integration: Use OpenAI's Python client (openai) with structured prompts to ensure consistent command parsing.
 Database: MongoDB with TTL indexes for logs older than 6 months.
