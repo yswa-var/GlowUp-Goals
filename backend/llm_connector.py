@@ -3,6 +3,7 @@ import openai
 import os
 import json
 import logging
+from fastapi import HTTPException
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -19,17 +20,21 @@ def get_response(prompt):
     logger.info(f"Sending prompt to OpenAI: {prompt}")
     try:
         response = openai.chat.completions.create(
-            model="gpt-4o-mini-2024-07-18",
+            model="gpt-3.5-turbo",  # Using a valid model name
             messages=[
                 {"role": "system", "content": "You are a helpful assistant that always responds in valid JSON format. Keep responses concise and complete."},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=500,  # Increased from 100 to 500
-            temperature=0.7  # Added temperature for more consistent responses
+            max_tokens=500,
+            temperature=0.7,
+            timeout=30  # Adding a 30-second timeout
         )
         content = response.choices[0].message.content.strip()
         logger.info(f"Received response from OpenAI: {content}")
         return content
+    except openai.APITimeoutError as e:
+        logger.error(f"OpenAI API request timed out: {str(e)}")
+        raise HTTPException(status_code=504, detail="Request to OpenAI timed out. Please try again.")
     except Exception as e:
         logger.error(f"Error calling OpenAI: {str(e)}")
         raise

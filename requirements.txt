@@ -1,2 +1,6 @@
 openai
 python-dotenv
+motor
+bcrypt
+jose
+bson
