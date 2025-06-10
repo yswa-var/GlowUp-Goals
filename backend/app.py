@@ -94,10 +94,17 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     email: Optional[str] = None
 
+class RepeatConfig(BaseModel):
+    enabled: str
+    interval: Optional[str] = None
+
 class TaskBase(BaseModel):
     title: str
     description: Optional[str] = None
+    estimated_time: Optional[str] = None
+    repeat: Optional[RepeatConfig] = None
     due_date: Optional[datetime] = None
+    task_order: Optional[int] = None
 
 class TaskCreate(TaskBase):
     pass
@@ -256,6 +263,18 @@ async def get_all_tasks(
         logger.error(f"Error fetching all tasks: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal server error")
 
+# TODO: for testing purpose only remove in production
+@app.delete("/tasks/all")
+async def delete_all_tasks(
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    try:
+        result = await db.tasks.delete_many({})
+        return {"message": f"Successfully deleted {result.deleted_count} tasks"}
+    except Exception as e:
+        logger.error(f"Error deleting all tasks: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal server error")
+
 # Keep your existing chat endpoint
 class ChatRequest(BaseModel):
     message: str
@@ -409,6 +428,46 @@ async def reset_password(
     )
     
     return {"message": "Password has been reset successfully"}
+
+# Add new endpoint for task creation
+@app.post("/tasks", response_model=TaskResponse)
+async def create_task(
+    task: TaskCreate,
+    current_user: UserInDB = Depends(get_current_user),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    try:
+        # Get the highest task_order for the user
+        highest_task = await db.tasks.find_one(
+            {"user_id": ObjectId(current_user.id)},
+            sort=[("task_order", -1)]
+        )
+        
+        # Set the new task_order
+        new_task_order = 1 if highest_task is None else highest_task.get("task_order", 0) + 1
+        
+        # Create task document
+        task_doc = {
+            "user_id": ObjectId(current_user.id),
+            "title": task.title,
+            "description": task.description or "",
+            "estimated_time": task.estimated_time,
+            "repeat": task.repeat.dict() if task.repeat else None,
+            "due_date": task.due_date,
+            "status": "pending",
+            "task_order": new_task_order,
+            "created_at": datetime.now(timezone.utc),
+            "completed_at": None
+        }
+        
+        result = await db.tasks.insert_one(task_doc)
+        task_doc["id"] = str(result.inserted_id)
+        task_doc["user_id"] = str(task_doc["user_id"])
+        
+        return TaskResponse(**task_doc)
+    except Exception as e:
+        logger.error(f"Error creating task: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 # teri maa ki chut
 # teri bhenchod ki chut

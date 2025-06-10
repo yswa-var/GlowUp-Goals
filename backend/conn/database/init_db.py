@@ -36,22 +36,33 @@ COLLECTIONS = {
         "validator": {
             "$jsonSchema": {
                 "bsonType": "object",
-                "required": ["user_id", "title", "status", "created_at"],
+                "required": ["user_id", "title", "status", "created_at", "task_order"],
                 "properties": {
                     "user_id": {"bsonType": "objectId"},
                     "title": {"bsonType": "string"},
                     "description": {"bsonType": "string"},
+                    "estimated_time": {"bsonType": "string"},
+                    "repeat": {
+                        "bsonType": "object",
+                        "required": ["enabled"],
+                        "properties": {
+                            "enabled": {"bsonType": "string", "enum": ["yes", "no"]},
+                            "interval": {"bsonType": "string"}
+                        }
+                    },
                     "due_date": {"bsonType": "date"},
                     "status": {"bsonType": "string"},
                     "created_at": {"bsonType": "date"},
-                    "completed_at": {"bsonType": "date"}
+                    "completed_at": {"bsonType": "date"},
+                    "task_order": {"bsonType": "int"}
                 }
             }
         },
         "indexes": [
             {"keys": [("user_id", 1), ("created_at", -1)]},
             {"keys": [("status", 1)]},
-            {"keys": [("due_date", 1)]}
+            {"keys": [("due_date", 1)]},
+            {"keys": [("user_id", 1), ("task_order", 1)], "unique": True}
         ]
     },
     "moods": {

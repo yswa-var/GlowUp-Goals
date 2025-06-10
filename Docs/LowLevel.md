@@ -1,12 +1,11 @@
 Low-Level Design: Accountability Coach App (User-Friendly)
-This low-level design (LLD) refines the Accountability Coach App to be maximally user-friendly, emphasizing simplicity, clarity, and motivational feedback. It uses a Python FastAPI backend, React frontend with Tailwind CSS, MongoDB database, and OpenAI API for LLM integration. The design details where the LLM is required, where it's not, and how to scrape tasks/goals to detect diversions with warnings.
+This low-level design (LLD) refines the Accountability Coach App to be maximally user-friendly, emphasizing simplicity, clarity, and motivational feedback. It uses a Python FastAPI backend, MongoDB database, and OpenAI API for LLM integration. The design details where the LLM is required, where it's not, and how to scrape tasks/goals to detect diversions with warnings.
 1. User-Friendly Design Principles
 
 Simplicity: Minimal steps for actions (e.g., one-click task addition).
-Clarity: Clear language, large fonts, high-contrast colors.
-Minimal Distractions: No animations, pop-ups, or unnecessary visuals.
+Clarity: Clear language and response formatting.
+Minimal Distractions: Focus on essential functionality.
 Motivation: Positive reinforcement (e.g., "Great job!") and gamified streaks.
-Accessibility: WCAG 2.1 compliance, keyboard navigation, screen reader support.
 Flexibility: Natural language input with forgiving parsing.
 
 2. Backend (Python FastAPI)
@@ -39,7 +38,7 @@ Store JWT in HTTP-only cookies for security without user effort.
 
 
 
-Tip: Provide visual feedback (e.g., green checkmark) on successful login.Trick: Use a "Stay logged in" option to reduce login frequency.
+Tip: Provide clear success/error responses for authentication actions.Trick: Use a "Stay logged in" option to reduce login frequency.
 LLM Usage: Not required for authentication (handled by FastAPI and OAuth).
 2.3 Database Integration
 
@@ -73,7 +72,7 @@ DELETE /tasks/{task_id}: Delete task.
 
 
 Moods: 
-POST /moods: Log mood (via chat or button).
+POST /moods: Log mood (via chat or direct input).
 GET /moods: Retrieve mood history.
 
 
@@ -265,9 +264,10 @@ LLM Usage: Not required (all frontend logic is UI-driven).
 
 Schema: Same as previous LLD, with added preferences in Users and previous_task_id in Tasks for diversion tracking.
 Indexes: user_id, timestamp, text index on Logs.message for keyword search.
-Retention: TTL for logs, manual deletion for tasks/moods via UI.
+Retention: TTL for logs, manual deletion for tasks/moods via API.
 
-User-Friendly Tip: Allow users to export tasks/moods as CSV from Settings.Trick: Use MongoDB aggregation pipelines for efficient trend analysis.
+User-Friendly Tip: Provide API endpoints for data export (e.g., CSV format).
+Trick: Use MongoDB aggregation pipelines for efficient trend analysis.
 LLM Usage: Not required (handled by MongoDB queries).
 5. LLM Integration (OpenAI API)
 
@@ -278,7 +278,7 @@ Trend Reporting: Crafting conversational summaries of distraction trends.
 
 
 Where Not Required:
-Authentication, database operations, task scraping (regex/difflib), scheduling, UI rendering, and most API logic.
+Authentication, database operations, task scraping (regex/difflib), scheduling, and most API logic.
 
 
 Implementation Details:
@@ -289,27 +289,26 @@ Store context in Redis for session continuity.
 
 Error Handling: Fallback to static messages if API fails.
 
-User-Friendly Tip: Use emojis (e.g., 🎉 for streaks) in LLM responses for visual appeal.Trick: Batch API calls for multiple users to optimize costs.
+User-Friendly Tip: Use emojis (e.g., 🎉 for streaks) in LLM responses for visual appeal.
+Trick: Batch API calls for multiple users to optimize costs.
 6. Engineering Masterpiece Tips & Tricks
 
-User Testing: Conduct usability tests with target users to refine UI/UX.
-Testing: 90% unit test coverage with Pytest, E2E with Cypress.
+Testing: 90% unit test coverage with Pytest, E2E with API testing.
 CI/CD: GitHub Actions with Docker for automated deployments.
 Monitoring: Prometheus/Grafana for real-time metrics (e.g., API latency, user engagement).
-Feedback Loop: In-app "Feedback" button with simple form (e.g., "What's working? What's not?").
+Feedback Loop: API endpoint for user feedback submission.
 Scalability: Stateless FastAPI with Kubernetes for horizontal scaling.
-Onboarding: Interactive tutorial on first login (e.g., "Try saying 'Add task: Write essay'").
-Customizability: Allow users to set LLM tone (e.g., "Cheerful", "Calm") in Settings.
+Customizability: Allow users to set LLM tone (e.g., "Cheerful", "Calm") via API.
 Performance: Optimize MongoDB queries with explain plans.
-Privacy: Transparent data usage notice on first login.
+Privacy: Transparent data usage notice in API responses.
 
 7. User-Friendly Enhancements
 
-Onboarding Flow: Guided setup with 3 steps (login, add first task, set check-in interval).
-Visual Cues: Progress bars for streaks, mood emojis (😊, 😔).
-Voice Input: Add speech-to-text option for chat (using Web Speech API).
-Notifications: Browser push notifications for check-ins if app is in background.
-Gamification: Badges for milestones (e.g., "5-Day Focus Hero").
-Minimal Steps: One-tap task completion, mood logging via sliders.
+API Features:
+- Guided setup endpoints for new users
+- Voice input processing via speech-to-text API
+- Push notification service integration
+- Gamification system with badges and achievements
+- One-step task completion and mood logging endpoints
 
 This LLD ensures the app is intuitive, accessible, and engaging while maintaining engineering excellence through robust architecture, optimized performance, and thoughtful design.

@@ -105,26 +105,8 @@ The app assumes users have a stable internet connection for real-time check-ins 
 
 3. High-Level Design
 3.1 System Architecture
-The app follows a client-server architecture with a React-based frontend, a Python FastAPI backend, and a MongoDB database for persistent storage. The LLM is integrated via OpenAI's API.
+The app follows a client-server architecture with a Python FastAPI backend and a MongoDB database for persistent storage. The LLM is integrated via OpenAI's API.
 Components:
-
-Frontend (Client)
-
-Technology: React with Tailwind CSS for responsive, accessible UI.
-Features:
-Chat interface for interacting with the LLM coach.
-Sidebar displaying to-do list, focus streak, and recent mood entries.
-Real-time updates for check-in reminders and task/mood changes.
-WebSocket connection for receiving periodic check-in prompts.
-
-
-Libraries:
-React (via CDN) for component-based UI.
-Tailwind CSS for styling.
-WebSocket client for real-time communication.
-
-
-
 
 Backend (Server)
 
@@ -137,7 +119,6 @@ Manage task and mood data (CRUD operations).
 Schedule 30-minute check-in reminders using a task scheduler (e.g., APScheduler).
 Analyze conversation logs for distraction trends using basic NLP (e.g., keyword detection for "distracted," "off-task").
 Serve distraction trend reports based on log analysis.
-
 
 Libraries:
 FastAPI for API and WebSocket endpoints.
@@ -185,11 +166,10 @@ Task Scheduler: APScheduler for scheduling 30-minute check-ins.
 
 Data Flow:
 
-User logs in via the frontend, authenticated by the FastAPI backend.
-The frontend sends chat inputs to the backend via REST API (/chat).
+User authentication is handled by the FastAPI backend.
+The backend processes chat inputs via REST API (/chat).
 The backend forwards inputs to OpenAI's API, processes responses, and updates the MongoDB database (tasks, moods, logs).
 The backend sends check-in reminders every 30 minutes via WebSocket.
-The frontend updates the UI in real-time (e.g., new messages, task list, streak counter).
 Distraction analysis runs periodically on the backend, querying logs and generating reports.
 
 3.2 User Interface Mockup
@@ -262,7 +242,7 @@ Rate Limiting: Implement rate limiting on FastAPI endpoints and OpenAI API calls
 
 Horizontal Scaling: Deploy multiple FastAPI instances with Uvicorn/Gunicorn behind a load balancer.
 Database Sharding: Shard MongoDB by user_id for large user bases.
-Caching: Use Redis to cache recent tasks and mood entries for faster UI updates.
+Caching: Use Redis to cache recent tasks and mood entries for faster updates.
 LLM Optimization: Cache common OpenAI API responses (e.g., motivational phrases) to reduce API calls and costs.
 
 3.6 Future Enhancements
@@ -301,7 +281,6 @@ Advanced Analytics: Use ML to predict distraction triggers based on mood and tas
 
 4. Implementation Notes
 
-Frontend: Use React with hooks for state management (e.g., useState for tasks, useEffect for WebSocket updates). Tailwind CSS ensures a clean, productivity-focused design (minimal animations, high contrast).
 Backend: FastAPI routes for /tasks, /moods, /logs, and /trends. WebSocket endpoint for check-in notifications. Use APScheduler for check-in scheduling.
 LLM Integration: Use OpenAI's Python client (openai) with structured prompts to ensure consistent command parsing.
 Database: MongoDB with TTL indexes for logs older than 6 months.
