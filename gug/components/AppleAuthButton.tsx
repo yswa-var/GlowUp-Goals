@@ -1,5 +1,6 @@
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { View, StyleSheet } from 'react-native';
+import { supabase } from '../lib/supabase';
 
 export default function AppleAuthButton() {
   return (
@@ -17,14 +18,42 @@ export default function AppleAuthButton() {
                 AppleAuthentication.AppleAuthenticationScope.EMAIL,
               ],
             });
-            // signed in
+            
             console.log('Apple Sign-In successful:', credential);
+            
+            // Sign in with Supabase using Apple identity token
+            const { data, error } = await supabase.auth.signInWithIdToken({
+              provider: 'apple',
+              token: credential.identityToken!,
+            });
+
+            if (error) {
+              console.error('Supabase sign-in error:', error);
+            } else {
+              console.log('Supabase sign-in successful:', data);
+              
+              // Update user profile with Apple data
+              if (credential.fullName && data.user) {
+                const { error: profileError } = await supabase
+                  .from('profiles')
+                  .upsert({
+                    id: data.user.id,
+                    full_name: `${credential.fullName.givenName} ${credential.fullName.familyName}`,
+                    email: credential.email,
+                  });
+                
+                if (profileError) {
+                  console.error('Profile update error:', profileError);
+                } else {
+                  console.log('Profile updated successfully');
+                }
+              }
+            }
+            
           } catch (e: any) {
             if (e.code === 'ERR_REQUEST_CANCELED') {
-              // handle that the user canceled the sign-in flow
               console.log('User canceled the sign-in flow');
             } else {
-              // handle other errors
               console.error('Apple Sign-In error:', e);
             }
           }
